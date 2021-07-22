@@ -6,6 +6,7 @@ _selector.addEventListener('change', function(event) {
         ? window.webkit.messageHandlers.toggleMessageHandler : AndroidInterface;
 
     if (executor != undefined) {
+        // This should be a primitive value (e.g. JSON converted to a string is possible)
         executor.postMessage(message);
     }
 });
