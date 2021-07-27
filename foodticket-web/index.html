@@ -14,7 +14,16 @@
             .slider.round { border-radius: 34px; }
             .slider.round:before { border-radius: 50%; }
         </style>
-        <script type="text/javascript" src="foodticket.js"></script>
+        <script type="text/javascript">
+            window.onload = function() {
+                var _selector = document.querySelector('input[name=myCheckbox]');
+                _selector.addEventListener('change', function(event) {
+                    window.checkBoxToggle(_selector.checked, function(message) {
+                        document.getElementById('value').innerText = message;
+                    });
+                });
+            }
+        </script>
     </head>
     <body>
         <h2 id="value">Toggle Switch is off</h2>
