@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nl.foodticket.foodticket.databinding.ActivityMainBinding
+import java.io.InputStream
 import java.net.URL
 
 class MainActivity : AppCompatActivity(), JavascriptBridge.Listener {
@@ -24,12 +25,17 @@ class MainActivity : AppCompatActivity(), JavascriptBridge.Listener {
         binding.webview.settings.javaScriptEnabled = true
         binding.webview.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
-                loadContentFromUrl(javascript) { source ->
-                    binding.webview.loadUrl("javascript:(function execute() { $source })()")
+                assets.open("foodticketWrapper.js")?.let {
+                    loadContentFromInputStream(it) { source ->
+                        val actual = """javascript:(function() {
+                            ${source}
+                            })()
+                        """.trimIndent();
+                        binding.webview.loadUrl(actual)
+                    }
                 }
             }
         }
-
         binding.webview.addJavascriptInterface(JavascriptBridge(this, this), "AndroidInterface")
 
         setContentView(binding.root)
@@ -45,9 +51,7 @@ class MainActivity : AppCompatActivity(), JavascriptBridge.Listener {
 
     override fun updateValue(value: String) {
         lifecycleScope.launch(Dispatchers.Main) {
-            binding.webview.evaluateJavascript("document.getElementById('value').innerText = \"$value\"") {
-                println("Result: $it")
-            }
+            binding.webview.evaluateJavascript("window.toggleMessageCallback(\"$value\");") {}
         }
     }
 
@@ -55,7 +59,11 @@ class MainActivity : AppCompatActivity(), JavascriptBridge.Listener {
         val connection = URL(url).openConnection()
 
         val stream = connection.getInputStream()
-        val source = stream.reader().buffered().use { it.readText() }
+        loadContentFromInputStream(stream, block)
+    }
+
+    private fun loadContentFromInputStream(inputStream: InputStream, block: (String) -> Unit) = lifecycleScope.launch(Dispatchers.IO) {
+        val source = inputStream.reader().buffered().use { it.readText() }
 
         withContext(Dispatchers.Main) {
             block(source)
@@ -63,7 +71,6 @@ class MainActivity : AppCompatActivity(), JavascriptBridge.Listener {
     }
 
     companion object {
-        private const val html = "https://raw.githubusercontent.com/nmrsmn/webview-poc/master/foodticket-web/index.html"
-        private const val javascript = "https://raw.githubusercontent.com/nmrsmn/webview-poc/master/foodticket-web/foodticket.js"
+        private const val html = "https://raw.githubusercontent.com/Luminis-Arnhem/webview-poc/master/foodticket-web/index.html"
     }
 }
