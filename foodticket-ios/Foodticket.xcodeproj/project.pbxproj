@@ -13,6 +13,9 @@
 		55DF647D26A958560025880B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55DF647B26A958560025880B /* Main.storyboard */; };
 		55DF647F26A958580025880B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55DF647E26A958580025880B /* Assets.xcassets */; };
 		55DF648226A958580025880B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55DF648026A958580025880B /* LaunchScreen.storyboard */; };
+		97D59EC026B03CD800E7797B /* foodticket.js in Resources */ = {isa = PBXBuildFile; fileRef = 97D59EBE26B03CD800E7797B /* foodticket.js */; };
+		97D59EC126B03CD800E7797B /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 97D59EBF26B03CD800E7797B /* index.html */; };
+		97D59EC326B03D0B00E7797B /* foodticketWrapper.js in Resources */ = {isa = PBXBuildFile; fileRef = 97D59EC226B03D0B00E7797B /* foodticketWrapper.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		55DF647E26A958580025880B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55DF648126A958580025880B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		55DF648326A958580025880B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97D59EBE26B03CD800E7797B /* foodticket.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = foodticket.js; path = "../../foodticket-web/foodticket.js"; sourceTree = "<group>"; };
+		97D59EBF26B03CD800E7797B /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = "../../foodticket-web/index.html"; sourceTree = "<group>"; };
+		97D59EC226B03D0B00E7797B /* foodticketWrapper.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = foodticketWrapper.js; path = "../../foodticket-wrapper/foodticketWrapper.js"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +46,7 @@
 		55DF646926A958560025880B = {
 			isa = PBXGroup;
 			children = (
+				97D59EBD26B03CC300E7797B /* Webapplication */,
 				55DF647426A958560025880B /* Foodticket */,
 				55DF647326A958560025880B /* Products */,
 			);
@@ -56,6 +63,7 @@
 		55DF647426A958560025880B /* Foodticket */ = {
 			isa = PBXGroup;
 			children = (
+				97D59EC226B03D0B00E7797B /* foodticketWrapper.js */,
 				55DF647526A958560025880B /* AppDelegate.swift */,
 				55DF647726A958560025880B /* SceneDelegate.swift */,
 				55DF647926A958560025880B /* ViewController.swift */,
@@ -65,6 +73,15 @@
 				55DF648326A958580025880B /* Info.plist */,
 			);
 			path = Foodticket;
+			sourceTree = "<group>";
+		};
+		97D59EBD26B03CC300E7797B /* Webapplication */ = {
+			isa = PBXGroup;
+			children = (
+				97D59EBE26B03CD800E7797B /* foodticket.js */,
+				97D59EBF26B03CD800E7797B /* index.html */,
+			);
+			path = Webapplication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,9 +141,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97D59EC326B03D0B00E7797B /* foodticketWrapper.js in Resources */,
 				55DF648226A958580025880B /* LaunchScreen.storyboard in Resources */,
 				55DF647F26A958580025880B /* Assets.xcassets in Resources */,
+				97D59EC126B03CD800E7797B /* index.html in Resources */,
 				55DF647D26A958560025880B /* Main.storyboard in Resources */,
+				97D59EC026B03CD800E7797B /* foodticket.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -31,22 +31,18 @@ class ViewController: UIViewController {
         let contentController = self.webView.configuration.userContentController
         contentController.add(self, name: "toggleMessageHandler")
         
-        // Used to load index.html and javascript.
-        let base = URL(fileURLWithPath: #file).deletingLastPathComponent()
-        
-        // Note: Normally this would be packaged into this project and it would be sufficient
-        // to do something like: if let url = Bundle.main.url(forResource: "foodticket-ios", withExtension: "js") {
-        let javascript = URL(fileURLWithPath: "../../foodticket-web/foodticket.js", relativeTo: base)
-        if let source = try? String(contentsOf: javascript, encoding: .utf8) {
-            let script = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
-            contentController.addUserScript(script)
-        }
-        
-        // Note: Normally it would be sufficient to do something like: webView.load(URLRequest(url: URL(string: "https://foodticket.nl/")))
-        // This is used to load the index.html used for both Android and iOS
-        let html = URL(fileURLWithPath: "../../foodticket-web/index.html", relativeTo: base)
-        if let source = try? String(contentsOf: html, encoding: .utf8) {
-            webView.loadHTMLString(source, baseURL: html)
+        if let wrapperUrl = Bundle.main.url(forResource: "foodticketWrapper", withExtension: "js") {
+            if let source = try? String(contentsOf: wrapperUrl, encoding: .utf8) {
+                let script = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+                contentController.addUserScript(script)
+            }
+            
+            // Note: Normally it would be sufficient to do something like: webView.load(URLRequest(url: URL(string: "https://foodticket.nl/")))
+            if let indexUrl = Bundle.main.url(forResource: "index", withExtension: "html") {
+                if let source = try? String(contentsOf: indexUrl, encoding: .utf8) {
+                    webView.loadHTMLString(source, baseURL: indexUrl)
+                }
+            }
         }
     }
     
@@ -68,13 +64,6 @@ extension ViewController: WKScriptMessageHandler {
         guard let message = message.body as? String else {
             return
         }
-        
-        webView.evaluateJavaScript("document.getElementById('value').innerText = \"\(message)\"") { (result, error) in
-            if let result = result {
-                print("Label is updated with message: \(result)")
-            } else if let error = error {
-                print("An error occurred: \(error)")
-            }
-        }
+        webView.evaluateJavaScript("window.toggleMessageCallback(\"\(message)\")")
     }
 }
