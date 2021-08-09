@@ -16,11 +16,13 @@
         </style>
         <script type="text/javascript">
             window.onload = function() {
+                window.nativeAPI.appLoaded(function(message) {
+                    document.getElementById('value').innerText = message;
+                });
+                
                 var _selector = document.querySelector('input[name=myCheckbox]');
                 _selector.addEventListener('change', function(event) {
-                    window.checkBoxToggle(_selector.checked, function(message) {
-                        document.getElementById('value').innerText = message;
-                    });
+                    window.nativeAPI.checkBoxToggle(_selector.checked);
                 });
             }
         </script>

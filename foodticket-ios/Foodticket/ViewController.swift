@@ -61,9 +61,11 @@ extension ViewController: WKUIDelegate {
 extension ViewController: WKScriptMessageHandler {
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard let message = message.body as? String else {
+        guard let toggled = message.body as? Bool else {
             return
         }
-        webView.evaluateJavaScript("window.toggleMessageCallback(\"\(message)\")")
+        
+        let message = toggled ? "Toggle Switch could be on" : "Toggle Switch is off";
+        webView.evaluateJavaScript("window.nativeAPI.checkBoxCallback(\"\(message)\")")
     }
 }
